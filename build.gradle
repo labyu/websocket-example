@@ -1,14 +1,11 @@
-plugins {
-    id 'java'
+allprojects {
+    group 'me.labyu.websocket'
+    version '1.0'
 }
 
-group 'me.cocoding'
-version '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
+subprojects {
+    apply plugin: 'java'
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+project('api') {
 }

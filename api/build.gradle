@@ -1,0 +1,264 @@
+buildscript {
+    ext {
+        springBootVersion = '2.3.3.RELEASE'
+        querydslPluginVersion = '1.0.10'
+    }
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+//        classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslPluginVersion}")
+    }
+}
+
+plugins {
+    id "idea"
+//    id "jacoco"
+//    id "org.flywaydb.flyway" version "7.0.3"
+//    id "org.asciidoctor.convert" version "2.4.0"
+//    id "com.google.cloud.tools.jib" version "2.5.0"
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+//apply plugin: "com.ewerk.gradle.plugins.querydsl"
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    testCompileOnly {
+        extendsFrom annotationProcessor
+    }
+//    querydsl.extendsFrom compileClasspath
+//    asciidoctor
+}
+
+repositories {
+    mavenCentral()
+}
+
+//tasks.whenTaskAdded { task ->
+//    if(task.name.equals("lint")) {
+//        task.enabled = false
+//    }
+//}
+
+sourceCompatibility = '11'
+
+dependencies {
+    /*****************************
+     * Spring Boot Dependencies
+     ****************************/
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+//    implementation 'org.springframework.boot:spring-boot-starter-validation'
+//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'org.springframework.boot:spring-boot-starter-mail'
+//    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+//
+//    // Yaml Resource Resolver
+//    implementation 'net.rakugakibox.util:yaml-resource-bundle:1.1'
+//
+//    /*****************************
+//     * Query DSL
+//     ****************************/
+//    compile("com.querydsl:querydsl-jpa")
+//    compile("com.querydsl:querydsl-apt")
+//
+    /*****************************
+     * Lombok
+     ****************************/
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+//
+//    /*****************************
+//     * Database
+//     ****************************/
+//    runtimeOnly 'mysql:mysql-connector-java'
+//    runtimeOnly 'com.h2database:h2'
+//    compile "org.flywaydb:flyway-core"
+//
+//    /*****************************
+//     * Test
+//     ****************************/
+//    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+//        exclude module: 'junit'
+//        exclude module: 'org.mockito:mockito-core'
+//        exclude module: 'org.mockito:mockito-junit-jupiter'
+//    }
+//    testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.1") {
+//        exclude module:'junit-platform-commons'
+//    }
+//    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.1")
+//    testRuntimeOnly("org.junit.platform:junit-platform-engine:1.5.1")
+//    testRuntimeOnly("org.junit.platform:junit-platform-commons:1.5.1")
+//    testCompile("org.junit.jupiter:junit-jupiter-params:5.5.1")
+//    testImplementation('org.springframework.security:spring-security-test')
+//    testImplementation('org.mockito:mockito-inline:3.4.0')
+//    testImplementation('org.mockito:mockito-core:3.4.0')
+//    testImplementation('org.mockito:mockito-junit-jupiter:3.4.0')
+//
+//    /*****************************
+//     * Rest Docs
+//     ****************************/
+//    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+//    testImplementation('org.springframework.restdocs:spring-restdocs-mockmvc')
+}
+
+//test {
+//    jacoco {
+//        destinationFile = file("$buildDir/jacoco/jacoco.exec")
+//    }
+//
+//    useJUnitPlatform {
+//        includeEngines 'junit-jupiter'
+//    }
+//
+//    finalizedBy 'jacocoTestReport'
+//}
+///*************************
+// * JIB
+// *************************/
+//jib.containerizingMode = "packaged"
+//
+///*************************
+// * Query DSL
+// *************************/
+//def querydslSrcDir = 'src/main/generated'
+//
+//querydsl {
+//    library = "com.querydsl:querydsl-apt"
+//    jpa = true
+//    querydslSourcesDir = querydslSrcDir
+//}
+//
+//idea {
+//    module {
+//        sourceDirs = sourceSets.main.java.srcDirs
+//        generatedSourceDirs += file("src/main/generated")
+//    }
+//}
+//
+//compileQuerydsl{
+//    options.annotationProcessorPath = configurations.querydsl
+//}
+//
+///*************************
+// * Rest Docs
+// *************************/
+//asciidoctor {
+//    dependsOn test
+//}
+//
+//jar {
+//    dependsOn asciidoctor
+//    from ("${asciidoctor.outputDir}/html5") {
+//        into 'static/docs'
+//    }
+//}
+//
+//bootJar {
+//    dependsOn asciidoctor
+//    from ("${asciidoctor.outputDir}/html5") {
+//        into 'static/docs'
+//    }
+//}
+//
+///*************************
+// * Set Env & SourceSets
+// *************************/
+//ext.profile = (!project.hasProperty('profile') || !profile || !['local', 'dev', 'prod', 'test'].contains(profile)) ? 'local' : profile
+//System.setProperty('spring.profiles.active', profile)
+//
+//sourceSets {
+//    main {
+//        java {
+//            // generated 는 QueryDSL의 디렉토리
+//            srcDirs "build/generated/sources/annotationProcessor/java/main", "src/main/java", querydslSrcDir
+//        }
+//        resources {
+//            srcDirs "src/main/resources"
+//        }
+//    }
+//}
+//
+//bootRun {
+//    String activeProfile = System.properties['spring.profiles.active']
+//    systemProperty "spring.profiles.active", activeProfile
+//}
+//
+///*************************
+// * jacoco 코드 커버리지 분
+// *************************/
+//
+//jacoco {
+//    toolVersion = '0.8.5'
+//}
+//
+//jacocoTestReport {
+//    reports {
+//        html.enabled false
+//        xml.enabled true
+//        csv.enabled false
+//
+//        html.destination file("$buildDir/jacoco/jacoco.html")
+//        xml.destination file("$buildDir/jacoco/jacoco.xml")
+//    }
+//}
+//
+//jacocoTestCoverageVerification {
+//    violationRules {
+//        rule {
+//            limit {
+//                minimum = 0.30
+//            }
+//        }
+//
+//        rule {
+//            enabled = true
+//            element = 'CLASS'
+//            limit {
+//                counter = 'BRANCH'
+//                value = 'COVEREDRATIO'
+//                minimum = 0.50
+//            }
+//
+//            limit {
+//                counter = 'LINE'
+//                value = 'COVEREDRATIO'
+//                minimum = 0.50
+//            }
+//
+//            limit {
+//                counter = 'LINE'
+//                value = 'TOTALCOUNT'
+//                maximum = 300
+//            }
+//
+//            excludes = [
+//                    '*.test.*',
+//            ]
+//        }
+//    }
+//}
+//
+///*************************
+// * Flyway DB 변경 이력 관리
+// *************************/
+//flyway {
+//    baselineVersion = 0
+//    encoding = 'UTF-8'
+//    validateOnMigrate = true
+//    baselineOnMigrate = true
+//    locations = ["filesystem:${file('src/main/resources/db/migration').absolutePath}"]
+//    configFiles = ["${file("src/flyway/conf/flyway-${profile}.conf").absolutePath}"]
+//}
